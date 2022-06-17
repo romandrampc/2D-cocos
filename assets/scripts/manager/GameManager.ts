@@ -26,5 +26,7 @@ export class GameManager extends Component {
 
   start() {
     PlayerController.Instance.init(this);
+
+    this.gameState = GameState.GAMEPLAY;
   }
 }

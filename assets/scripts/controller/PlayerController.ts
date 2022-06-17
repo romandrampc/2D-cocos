@@ -64,9 +64,10 @@ export class PlayerController extends Component {
       } else if (touchPos.x >= this.maxX) {
         this.node.setWorldPosition(new Vec3(this.maxX, worldPos.y, worldPos.z));
       } else {
-        this.node.setWorldPosition(
-          new Vec3(touchPos.x, worldPos.y, worldPos.z)
-        );
+        // this.node.setWorldPosition(
+        //   new Vec3(touchPos.x, worldPos.y, worldPos.z)
+        // );
+        // this.node;
       }
       const newWorldPos = this.bulletSpawnPoint.getWorldPosition();
       // BulletManager.instance.generateBullet(newWorldPos);
