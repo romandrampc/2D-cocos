@@ -11,6 +11,7 @@ import {
   Vec3,
   math,
 } from 'cc';
+import { BulletManager } from '../managers/BulletManager';
 import { GameManager, GAMESTATE } from '../managers/GameManager';
 const { ccclass, property } = _decorator;
 
@@ -60,7 +61,7 @@ export class PlayerController extends Component {
     const diffPos = Math.abs(worldPos.x - touchPos.x);
     if (diffPos < 1) {
       const newWorldPos = this.bulletSpawnPoint.getWorldPosition();
-      // SpawnBullet
+      BulletManager.Instance.generateBullet(newWorldPos);
     } else {
       if (touchPos.x <= this.minX) {
         this.node.setWorldPosition(new Vec3(this.minX, worldPos.y, worldPos.z));
@@ -72,7 +73,7 @@ export class PlayerController extends Component {
         );
       }
       const newWorldPos = this.bulletSpawnPoint.getWorldPosition();
-      // SpawnBullet
+      BulletManager.Instance.generateBullet(newWorldPos);
     }
   }
 
