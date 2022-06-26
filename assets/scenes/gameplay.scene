@@ -729,7 +729,7 @@
     "_enabled": true,
     "__prefab": null,
     "id": "",
-    "type": "",
+    "type": "Meteor",
     "_id": "3fcsP78cVEgrEk5voc5fPc"
   },
   {
@@ -744,7 +744,7 @@
     "tag": 0,
     "_group": 1,
     "_density": 1,
-    "_sensor": false,
+    "_sensor": true,
     "_friction": 0.2,
     "_restitution": 0,
     "_offset": {
@@ -768,12 +768,12 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "enabledContactListener": false,
+    "enabledContactListener": true,
     "bullet": false,
     "awakeOnLoad": true,
     "_group": 1,
     "_type": 1,
-    "_allowSleep": true,
+    "_allowSleep": false,
     "_gravityScale": 1,
     "_linearDamping": 0,
     "_angularDamping": 0,
