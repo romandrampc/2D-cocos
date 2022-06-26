@@ -10,6 +10,7 @@ import {
   Quat,
 } from 'cc';
 import { Bullet } from './Bullet';
+import { FallingObjectManager } from './manager/FallingObjectManager';
 import { GameManager, GameState } from './manager/GameManager';
 const { ccclass, property } = _decorator;
 
@@ -70,7 +71,7 @@ export class FallingObject extends Component {
       this.node.setRotationFromEuler(this._curRotVec3);
       if (this._curPos.y < -100) {
         this._isInit = false;
-        // TODO: return to manager
+        FallingObjectManager.instance.returnObject(this)
       }
     }
   }
@@ -89,7 +90,8 @@ export class FallingObject extends Component {
 
   setPos = () => {
     this.node.setPosition(Vec3.ZERO);
-    // TODO: return to manager
+   
+    FallingObjectManager.instance.returnObject(this)
   };
 
   resetFall() {

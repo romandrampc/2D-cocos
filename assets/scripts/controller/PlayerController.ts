@@ -11,6 +11,7 @@ import {
   EventMouse,
   math,
 } from 'cc';
+import { BulletManager } from '../manager/BulletManager';
 import { GameManager, GameState } from '../manager/GameManager';
 const { ccclass, property } = _decorator;
 
@@ -57,20 +58,20 @@ export class PlayerController extends Component {
 
     if (diffPos < 1) {
       const newWorldPos = this.bulletSpawnPoint.getWorldPosition();
-      // BulletManager.instance.generateBullet(newWorldPos);
+      BulletManager.instance.generateBullet(newWorldPos);
     } else {
       if (touchPos.x <= this.minX) {
         this.node.setWorldPosition(new Vec3(this.minX, worldPos.y, worldPos.z));
       } else if (touchPos.x >= this.maxX) {
         this.node.setWorldPosition(new Vec3(this.maxX, worldPos.y, worldPos.z));
       } else {
-        // this.node.setWorldPosition(
-        //   new Vec3(touchPos.x, worldPos.y, worldPos.z)
-        // );
-        // this.node;
+        this.node.setWorldPosition(
+          new Vec3(touchPos.x, worldPos.y, worldPos.z)
+        );
+        this.node;
       }
       const newWorldPos = this.bulletSpawnPoint.getWorldPosition();
-      // BulletManager.instance.generateBullet(newWorldPos);
+      BulletManager.instance.generateBullet(newWorldPos);
     }
   }
 
