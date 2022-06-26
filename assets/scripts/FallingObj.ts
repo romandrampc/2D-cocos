@@ -13,8 +13,11 @@ import { Bullet } from './Bullet';
 import { GameManager, GAMESTATE } from './managers/GameManager';
 const { ccclass, property } = _decorator;
 
-@ccclass('Meteor')
-export class Meteor extends Component {
+@ccclass('FallingObj')
+export class FallingObj extends Component {
+  @property(String)
+  type: string;
+
   private _isInit: boolean;
   private _curPos: Vec3 = new Vec3();
   private _curRotEuler: Vec3 = new Vec3();
@@ -53,7 +56,6 @@ export class Meteor extends Component {
       this._deltaPos.y = -this._fallSpeed * dt;
       this._deltaRot.z = this._rotateSpeed * dt;
       this._curRotQuat.getEulerAngles(this._curRotEuler);
-      console.log(this._rotateSpeed * dt);
 
       Vec3.add(this._curPos, this._curPos, this._deltaPos);
       Vec3.add(this._curRotEuler, this._curRotEuler, this._deltaRot);

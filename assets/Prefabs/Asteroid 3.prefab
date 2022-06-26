@@ -12,7 +12,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Meteor",
+    "_name": "Asteroid 3",
     "_objFlags": 0,
     "_parent": null,
     "_children": [],
@@ -40,7 +40,7 @@
     "_lpos": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 551.375,
+      "y": 534.079,
       "z": 0
     },
     "_lrot": {
@@ -138,39 +138,6 @@
     "fileId": "e71ctEmpxFC4KlSYRZNz/a"
   },
   {
-    "__type__": "cc.RigidBody2D",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 1
-    },
-    "_enabled": true,
-    "__prefab": {
-      "__id__": 7
-    },
-    "enabledContactListener": true,
-    "bullet": false,
-    "awakeOnLoad": true,
-    "_group": 1,
-    "_type": 1,
-    "_allowSleep": false,
-    "_gravityScale": 1,
-    "_linearDamping": 0,
-    "_angularDamping": 0,
-    "_linearVelocity": {
-      "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
-    },
-    "_angularVelocity": 0,
-    "_fixedRotation": false,
-    "_id": ""
-  },
-  {
-    "__type__": "cc.CompPrefabInfo",
-    "fileId": "119okzpgBCjIgGOgPzLaNU"
-  },
-  {
     "__type__": "cc.BoxCollider2D",
     "_name": "",
     "_objFlags": 0,
@@ -179,7 +146,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 9
+      "__id__": 7
     },
     "tag": 0,
     "_group": 1,
@@ -201,10 +168,10 @@
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "ebEOq91bNGKI+8qIQDsh/5"
+    "fileId": "60tdA1CyVNma9BvvNo62vk"
   },
   {
-    "__type__": "49b87+g7/VDrZQpdgIOadVO",
+    "__type__": "cc.RigidBody2D",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -212,13 +179,48 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 11
+      "__id__": 9
     },
+    "enabledContactListener": true,
+    "bullet": false,
+    "awakeOnLoad": true,
+    "_group": 1,
+    "_type": 1,
+    "_allowSleep": true,
+    "_gravityScale": 1,
+    "_linearDamping": 0,
+    "_angularDamping": 0,
+    "_linearVelocity": {
+      "__type__": "cc.Vec2",
+      "x": 0,
+      "y": 0
+    },
+    "_angularVelocity": 0,
+    "_fixedRotation": false,
     "_id": ""
   },
   {
     "__type__": "cc.CompPrefabInfo",
-    "fileId": "daBK8pnRNGPZ+sT8R7l61M"
+    "fileId": "f8gHHXP8NCU7EzBbxw3B1L"
+  },
+  {
+    "__type__": "7ac232U0r5JgYqrxx7aPPKB",
+    "_name": "",
+    "_objFlags": 0,
+    "__editorExtras__": {},
+    "node": {
+      "__id__": 1
+    },
+    "_enabled": true,
+    "__prefab": {
+      "__id__": 11
+    },
+    "type": "Meteor",
+    "_id": ""
+  },
+  {
+    "__type__": "cc.CompPrefabInfo",
+    "fileId": "a5pCadPgBPuYVsfWt8OIF2"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -228,6 +230,6 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "ffXPxqIYRNJZD02EInTOJE"
+    "fileId": "65aI1rx0JA3Z6aWn162Rgy"
   }
 ]

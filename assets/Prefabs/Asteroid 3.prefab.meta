@@ -2,12 +2,12 @@
   "ver": "1.1.30",
   "importer": "prefab",
   "imported": true,
-  "uuid": "a2eca568-6324-41d5-b5ea-13763cfd341e",
+  "uuid": "2a2eb58d-6cb2-4b2a-aed0-f21903993e06",
   "files": [
     ".json"
   ],
   "subMetas": {},
   "userData": {
-    "syncNodeName": "Meteor"
+    "syncNodeName": "Asteroid 3"
   }
 }
