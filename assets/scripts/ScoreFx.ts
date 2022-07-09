@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, Label, Vec3, Color, math } from 'cc';
+import { FxManager } from './managers/FxManager';
 const { ccclass, property } = _decorator;
 
 const duration: number = 2;
@@ -40,7 +41,7 @@ export class ScoreFx extends Component {
       this.label.node.setPosition(this._curPos);
       if (this._cntTime / duration >= 1) {
         this._playing = false;
-        //FxManager.instance.returnScoreFx(this);
+        FxManager.instance.returnScoreFx(this);
       }
     }
   }
