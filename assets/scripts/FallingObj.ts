@@ -11,6 +11,7 @@ import {
   v3,
 } from 'cc';
 import { Bullet } from './Bullet';
+import { FallingObjManager } from './managers/FallingObjManager';
 import { GameManager, GAMESTATE } from './managers/GameManager';
 const { ccclass, property } = _decorator;
 
@@ -63,7 +64,7 @@ export class FallingObj extends Component {
 
       if (this._curPos.y < -100) {
         this._isInit = false;
-        //TODO: return manager
+        this.scheduleOnce(this.onReturnToDestroy, 0.00001);
       }
     }
   }
@@ -81,7 +82,7 @@ export class FallingObj extends Component {
   }
 
   onReturnToDestroy() {
-    this.node.setPosition(new Vec3(1000, 1000, 0));
-    //TODO: return manager
+    this.node.setPosition(new Vec3(3000, 1000, 0));
+    FallingObjManager.Instance.returnObject(this);
   }
 }

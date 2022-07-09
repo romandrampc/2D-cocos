@@ -1,6 +1,8 @@
-import { _decorator, Component, Node, PlaneCollider } from 'cc';
+import { _decorator, Component, Node, PlaneCollider, Vec3 } from 'cc';
+import { METEOR } from '../Configs/FallObjConfigs';
 import { PlayerController } from '../controllers/PlayerController';
 import { FallingObjManager } from './FallingObjManager';
+import { FxManager } from './FxManager';
 const { ccclass, property } = _decorator;
 
 export enum GAMESTATE {
@@ -27,7 +29,16 @@ export class GameManager extends Component {
 
   start() {
     PlayerController.Instance.init(this);
-    FallingObjManager.Instance.init()
+    FallingObjManager.Instance.init();
     this.gameState = GAMESTATE.GAMEPLAY;
+  }
+
+  onBulletCrashTarget(targetId: string, pos: Vec3) {
+    switch (targetId) {
+      case METEOR:
+        console.log('hit');
+        FxManager.instance.showScoreFx(pos, 'Hit');
+        break;
+    }
   }
 }

@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, Prefab, Vec3, instantiate } from 'cc';
+import { METEOR } from '../Configs/FallObjConfigs';
 import { FallingObj } from '../FallingObj';
 import { Meteor } from '../Meteor';
 import { randomItems } from '../services/Utils';
@@ -54,10 +55,10 @@ export class FallingObjManager extends Component {
         if (this.isChanceNotSpawn) {
           const gacha = Math.floor(Math.random() * 100);
           if (this.spawnRate > gacha) {
-            this.randomSpawn('Meteor');
+            this.randomSpawn(METEOR);
           }
         } else {
-          this.randomSpawn('Meteor');
+          this.randomSpawn(METEOR);
         }
       }
     }
@@ -95,7 +96,7 @@ export class FallingObjManager extends Component {
     let fallObj: FallingObj;
     let spawnerTarget: Node;
     let targetPrefab: Prefab;
-    if (targetObjType === 'Meteor') {
+    if (targetObjType === METEOR) {
       let array = randomItems([...this.meteorPrefab], 1);
       targetPrefab = array.shift();
     }
@@ -105,12 +106,27 @@ export class FallingObjManager extends Component {
     fallObj = newNode.getComponent(FallingObj);
     this._activeFallingObj.push(fallObj);
     this._previousSlotFallIndex = this.spawnPosNodes.indexOf(spawnerTarget);
-    if (targetObjType === 'Meteor') {
+    if (targetObjType === METEOR) {
       fallObj.FallSpeed = this._curMetoerFallSpeed;
     }
     fallObj.node.setParent(spawnerTarget, false);
     fallObj.node.setPosition(Vec3.ZERO);
     this.randomPos(fallObj.node);
     fallObj.init();
+  }
+
+  returnObject = (obj: FallingObj) => {
+    this._activeFallingObj.slice(this._activeFallingObj.indexOf(obj), 1);
+    obj.node.destroy();
+  };
+
+  gameOver() {
+    if (this._activeFallingObj.length > 0) {
+      this._activeFallingObj.forEach((item) => {
+        item.node.destroy();
+      });
+
+      this._activeFallingObj.length = 0;
+    }
   }
 }
