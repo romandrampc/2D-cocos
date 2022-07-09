@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, PlaneCollider } from 'cc';
 import { PlayerController } from '../controllers/PlayerController';
+import { FallingObjManager } from './FallingObjManager';
 const { ccclass, property } = _decorator;
 
 export enum GAMESTATE {
@@ -26,6 +27,7 @@ export class GameManager extends Component {
 
   start() {
     PlayerController.Instance.init(this);
+    FallingObjManager.Instance.init()
     this.gameState = GAMESTATE.GAMEPLAY;
   }
 }

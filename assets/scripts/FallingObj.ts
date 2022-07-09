@@ -8,6 +8,7 @@ import {
   Contact2DType,
   Collider2D,
   IPhysics2DContact,
+  v3,
 } from 'cc';
 import { Bullet } from './Bullet';
 import { GameManager, GAMESTATE } from './managers/GameManager';
@@ -20,10 +21,9 @@ export class FallingObj extends Component {
 
   private _isInit: boolean;
   private _curPos: Vec3 = new Vec3();
-  private _curRotEuler: Vec3 = new Vec3();
-  private _curRotQuat: Quat = new Quat();
+  private _curRot: number = 0;
+
   private _deltaPos: Vec3 = new Vec3(0, 0, 0);
-  private _deltaRot: Vec3 = new Vec3(0, 0, 0);
   private _fallSpeed: number = 120;
   private _rotateSpeed: number = 20;
   private _collider: BoxCollider2D;
@@ -47,20 +47,20 @@ export class FallingObj extends Component {
 
   init() {
     this._isInit = true;
+    this._curRot = 0;
   }
 
   lateUpdate(dt: number) {
     if (this._isInit && GameManager.Instance.gameState === GAMESTATE.GAMEPLAY) {
       this.node.getWorldPosition(this._curPos);
-      this.node.getWorldRotation(this._curRotQuat);
       this._deltaPos.y = -this._fallSpeed * dt;
-      this._deltaRot.z = this._rotateSpeed * dt;
-      this._curRotQuat.getEulerAngles(this._curRotEuler);
-
       Vec3.add(this._curPos, this._curPos, this._deltaPos);
-      Vec3.add(this._curRotEuler, this._curRotEuler, this._deltaRot);
       this.node.setWorldPosition(this._curPos);
-      this.node.setRotationFromEuler(this._curRotEuler);
+
+      this._curRot += this._rotateSpeed * dt;
+      if (this._curRot >= 360) this._curRot = 0;
+      this.node.setRotationFromEuler(new Vec3(0, 0, this._curRot));
+
       if (this._curPos.y < -100) {
         this._isInit = false;
         //TODO: return manager

@@ -5,6 +5,8 @@ import {
   BoxCollider2D,
   Vec3,
   Contact2DType,
+  Collider2D,
+  IPhysics2DContact,
 } from 'cc';
 import { BulletManager } from './managers/BulletManager';
 import { GameManager, GAMESTATE } from './managers/GameManager';
@@ -55,5 +57,9 @@ export class Bullet extends Component {
     BulletManager.Instance.removeBullet(this);
   }
 
-  onBeginContact() {}
+  onBeginContact(
+    selfCollider: Collider2D,
+    otherCollider: Collider2D,
+    contact: IPhysics2DContact | null
+  ) {}
 }
