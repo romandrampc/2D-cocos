@@ -10,6 +10,7 @@ import {
   IPhysics2DContact,
 } from 'cc';
 import { Bullet } from './Bullet';
+import { FallingObjManager } from './managers/FallingObjManager';
 import { GameManager, GAMESTATE } from './managers/GameManager';
 const { ccclass, property } = _decorator;
 
@@ -20,10 +21,10 @@ export class FallingObj extends Component {
 
   private _isInit: boolean;
   private _curPos: Vec3 = new Vec3();
-  private _curRotEuler: Vec3 = new Vec3();
-  private _curRotQuat: Quat = new Quat();
+  private _curRotEuler: number = 0;
+  //private _curRotQuat: Quat = new Quat();
   private _deltaPos: Vec3 = new Vec3(0, 0, 0);
-  private _deltaRot: Vec3 = new Vec3(0, 0, 0);
+  //private _deltaRot: Vec3 = new Vec3(0, 0, 0);
   private _fallSpeed: number = 120;
   private _rotateSpeed: number = 20;
   private _collider: BoxCollider2D;
@@ -52,18 +53,17 @@ export class FallingObj extends Component {
   lateUpdate(dt: number) {
     if (this._isInit && GameManager.Instance.gameState === GAMESTATE.GAMEPLAY) {
       this.node.getWorldPosition(this._curPos);
-      this.node.getWorldRotation(this._curRotQuat);
       this._deltaPos.y = -this._fallSpeed * dt;
-      this._deltaRot.z = this._rotateSpeed * dt;
-      this._curRotQuat.getEulerAngles(this._curRotEuler);
-
       Vec3.add(this._curPos, this._curPos, this._deltaPos);
-      Vec3.add(this._curRotEuler, this._curRotEuler, this._deltaRot);
       this.node.setWorldPosition(this._curPos);
-      this.node.setRotationFromEuler(this._curRotEuler);
+
+      this._curRotEuler += this._rotateSpeed * dt;
+      if (this._curRotEuler >= 360) this._curRotEuler = 0;
+      this.node.setRotationFromEuler(new Vec3(0, 0, this._curRotEuler));
+      console.log(this._curPos);
       if (this._curPos.y < -100) {
         this._isInit = false;
-        //TODO: return manager
+        this.scheduleOnce(this.onReturnToDestroy, 0.001);
       }
     }
   }
@@ -82,6 +82,6 @@ export class FallingObj extends Component {
 
   onReturnToDestroy() {
     this.node.setPosition(new Vec3(1000, 1000, 0));
-    //TODO: return manager
+    FallingObjManager.Instance.returnObject(this);
   }
 }

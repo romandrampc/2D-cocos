@@ -5,7 +5,10 @@ import {
   BoxCollider2D,
   Vec3,
   Contact2DType,
+  Collider2D,
+  IPhysics2DContact,
 } from 'cc';
+import { FallingObj } from './FallingObj';
 import { BulletManager } from './managers/BulletManager';
 import { GameManager, GAMESTATE } from './managers/GameManager';
 const { ccclass, property } = _decorator;
@@ -52,8 +55,22 @@ export class Bullet extends Component {
   }
 
   destroyBullet() {
+    this.node.setWorldPosition(new Vec3(3000, 0, 0));
     BulletManager.Instance.removeBullet(this);
   }
 
-  onBeginContact() {}
+  onBeginContact(
+    selfCollider: Collider2D,
+    otherCollider: Collider2D,
+    contact: IPhysics2DContact | null
+  ) {
+    const fallObj = otherCollider.getComponent(FallingObj);
+    if (fallObj && !this._isBulletCrash) {
+      this._isBulletCrash = true;
+      this._isInit = false;
+      const worldPos = otherCollider.node.getWorldPosition();
+      GameManager.Instance.onBulletCrashTarget(fallObj.type, worldPos);
+      this.scheduleOnce(() => this.destroyBullet(), 0.001);
+    }
+  }
 }

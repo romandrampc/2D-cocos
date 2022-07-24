@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, Prefab, Vec3, instantiate } from 'cc';
+import { METEOR } from '../Configs/FallObjConfigs';
 import { FallingObj } from '../FallingObj';
-import { Meteor } from '../Meteor';
+
 import { randomItems } from '../services/Utils';
 import { GameManager, GAMESTATE } from './GameManager';
 const { ccclass, property } = _decorator;
@@ -29,7 +30,7 @@ export class FallingObjManager extends Component {
   meteorSpawnTime: number = 1;
 
   private _activeFallingObj: FallingObj[] = [];
-  private _curMetoerFallSpeed: number = 0;
+  private _curMetoerFallSpeed: number = 100;
   private _meteorSpawnTimer: number = 0;
   private _previousSlotFallIndex: number = -1;
 
@@ -54,10 +55,10 @@ export class FallingObjManager extends Component {
         if (this.isChanceNotSpawn) {
           const gacha = Math.floor(Math.random() * 100);
           if (this.spawnRate > gacha) {
-            // this.randomSpawn('Meteor');
+            this.randomSpawn(METEOR);
           }
         } else {
-          //   this.randomSpawn('Meteor');
+          this.randomSpawn(METEOR);
         }
       }
     }
@@ -81,36 +82,49 @@ export class FallingObjManager extends Component {
     return targetSpawnerPoint;
   }
 
-  //   randomPos(obj: Node) {
-  //     let curSpawnPos = new Vec3();
-  //     obj.getWorldPosition(curSpawnPos);
-  //     const posOrNegChance = Math.floor(Math.random() * 2);
-  //     let pos = Math.random() * this.rangeSpawn;
-  //     pos = posOrNegChance === 0 ? pos : pos * -1;
-  //     Vec3.add(curSpawnPos, curSpawnPos, new Vec3(pos, 0, 0));
-  //     obj.setPosition(curSpawnPos);
-  //   }
+  randomPos(obj: Node) {
+    let curSpawnPos = new Vec3();
+    obj.getWorldPosition(curSpawnPos);
+    const posOrNegChance = Math.floor(Math.random() * 2);
+    let pos = Math.random() * this.rangeSpawn;
+    pos = posOrNegChance === 0 ? pos : pos * -1;
+    Vec3.add(curSpawnPos, curSpawnPos, new Vec3(pos, 0, 0));
+    obj.setWorldPosition(curSpawnPos);
+  }
 
-  //   randomSpawn(targetObjType: string) {
-  //     let fallObj: FallingObj;
-  //     let spawnerTarget: Node;
-  //     let targetPrefab: Prefab;
-  //     if (targetObjType === 'Meteor') {
-  //       let array = randomItems([...this.meteorPrefab], 1);
-  //       targetPrefab = array.shift();
-  //     }
-  //     spawnerTarget = this.randomSpawnTarget(this._previousSlotFallIndex);
+  randomSpawn(targetObjType: string) {
+    let fallObj: FallingObj;
+    let spawnerTarget: Node;
+    let targetPrefab: Prefab;
+    if (targetObjType === METEOR) {
+      let array = randomItems([...this.meteorPrefab], 1);
+      targetPrefab = array.shift();
+    }
+    spawnerTarget = this.randomSpawnTarget(this._previousSlotFallIndex);
 
-  //     const newNode = instantiate(targetPrefab);
-  //     fallObj = newNode.getComponent(FallingObj);
-  //     this._activeFallingObj.push(fallObj);
-  //     this._previousSlotFallIndex = this.spawnPosNodes.indexOf(spawnerTarget);
-  //     if (targetObjType === 'Meteor') {
-  //       fallObj.FallSpeed = this._curMetoerFallSpeed;
-  //     }
-  //     fallObj.node.setParent(spawnerTarget, false);
-  //     fallObj.node.setPosition(Vec3.ZERO);
-  //     this.randomPos(fallObj.node);
-  //     fallObj.init();
-  //   }
+    const newNode = instantiate(targetPrefab);
+    fallObj = newNode.getComponent(FallingObj);
+    this._activeFallingObj.push(fallObj);
+    this._previousSlotFallIndex = this.spawnPosNodes.indexOf(spawnerTarget);
+    if (targetObjType === METEOR) {
+      fallObj.FallSpeed = this._curMetoerFallSpeed;
+    }
+    fallObj.node.setParent(spawnerTarget, false);
+    fallObj.node.setPosition(Vec3.ZERO);
+    this.randomPos(fallObj.node);
+    fallObj.init();
+  }
+
+  returnObject = (obj: FallingObj) => {
+    this._activeFallingObj.splice(this._activeFallingObj.indexOf(obj), 1);
+    obj.node.destroy();
+  };
+
+  gameOver() {
+    if (this._activeFallingObj.length > 0) {
+      this._activeFallingObj.forEach((item) => item.node.destroy());
+    }
+
+    this._activeFallingObj.length = 0;
+  }
 }

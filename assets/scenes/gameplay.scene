@@ -798,8 +798,8 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 0,
-      "y": 0,
+      "x": -180.364,
+      "y": 759.273,
       "z": 0
     },
     "_lrot": {
@@ -1243,7 +1243,7 @@
     "rangeSpawn": 50,
     "spawnRate": 30,
     "isChanceNotSpawn": false,
-    "meteorSpawnTime": 1,
+    "meteorSpawnTime": 5,
     "_id": "16TKg6GVBC0bQtixEu6uUY"
   },
   {
