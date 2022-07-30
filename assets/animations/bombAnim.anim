@@ -32,7 +32,7 @@
         "frame": 0.4166666666666667,
         "func": "onAnimComplete",
         "params": [
-          "param"
+          true
         ]
       }
     ]

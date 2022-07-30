@@ -1,0 +1,13 @@
+{
+  "ver": "1.1.30",
+  "importer": "prefab",
+  "imported": true,
+  "uuid": "cacc289a-5f30-450e-9427-0bc75560554a",
+  "files": [
+    ".json"
+  ],
+  "subMetas": {},
+  "userData": {
+    "syncNodeName": "BombFx"
+  }
+}

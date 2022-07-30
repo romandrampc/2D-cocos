@@ -38,6 +38,7 @@ export class GameManager extends Component {
       case METEOR:
         console.log('hit');
         FxManager.instance.showScoreFx(pos, 'Hit');
+        FxManager.instance.showBombFx(pos);
         break;
     }
   }
