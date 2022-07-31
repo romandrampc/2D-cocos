@@ -30,7 +30,7 @@ export class FallingObjManager extends Component {
   meteorSpawnTime: number = 1;
 
   private _activeFallingObj: FallingObj[] = [];
-  private _curMetoerFallSpeed: number = 100;
+  private _curMetoerFallSpeed: number = 0;
   private _meteorSpawnTimer: number = 0;
   private _previousSlotFallIndex: number = -1;
 
