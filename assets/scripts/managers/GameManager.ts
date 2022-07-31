@@ -61,6 +61,7 @@ export class GameManager extends Component {
     switch (targetId) {
       case METEOR:
         FxManager.Instance.showFx(pos, 'Hit');
+        FxManager.Instance.showBombFx(pos);
         break;
     }
   }

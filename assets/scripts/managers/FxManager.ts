@@ -1,4 +1,5 @@
 import { _decorator, Component, Node, Prefab, Vec3, instantiate } from 'cc';
+import { BombFx } from '../BombFx';
 import { ScoreFx } from '../ScoreFx';
 const { ccclass, property } = _decorator;
 
@@ -13,9 +14,14 @@ export class FxManager extends Component {
   @property(Prefab)
   scorePrefab: Prefab;
   @property(Node)
-  fxParent: Node;
+  fxFrontParent: Node;
+  @property(Prefab)
+  bombPrefab: Prefab;
+  @property(Node)
+  fxBackParent: Node;
 
   private _activeFxArray: ScoreFx[] = [];
+  private _activeBombFxArray: BombFx[] = [];
 
   onLoad() {
     FxManager._instance = this;
@@ -25,7 +31,7 @@ export class FxManager extends Component {
     let fx: ScoreFx;
 
     const newNode = instantiate(this.scorePrefab);
-    newNode.setParent(this.fxParent);
+    newNode.setParent(this.fxFrontParent);
     fx = newNode.getComponent(ScoreFx);
     fx.init(worldPos, txt);
     this._activeFxArray.push(fx);
@@ -36,6 +42,23 @@ export class FxManager extends Component {
     fx.node.destroy();
   };
 
+  showBombFx = (worldPos: Vec3) => {
+    let fx: BombFx;
+
+    const newNode = instantiate(this.bombPrefab);
+    newNode.setParent(this.fxBackParent);
+    fx = newNode.getComponent(BombFx);
+    newNode.setWorldPosition(worldPos);
+
+    this._activeBombFxArray.push(fx);
+    fx.playAnim(this);
+  };
+
+  returnBombFx = (fx: BombFx) => {
+    this._activeBombFxArray.splice(this._activeBombFxArray.indexOf(fx), 1);
+    fx.node.destroy();
+  };
+
   gameOver() {
     if (this._activeFxArray.length > 0)
       this._activeFxArray.forEach((fx) => {
@@ -43,6 +66,11 @@ export class FxManager extends Component {
       });
 
     this._activeFxArray.length = 0;
+
+    if (this._activeBombFxArray.length > 0)
+      this._activeBombFxArray.forEach((fx) => fx.node.destroy());
+
+    this._activeBombFxArray.length = 0;
   }
 }
 
